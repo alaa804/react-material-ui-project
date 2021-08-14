@@ -17,14 +17,14 @@ const Search = () => {
     useEffect(() => {
         const fetchImages = async () => {
            setLoading(true);
-            const result = await axios.get(`${apiUrl}/?key=${apiKey}&q=${text}&image_type=photo&per_page=${amount}safesearch=true`)
+            const result = await axios.get(`${apiUrl}/?key=${apiKey}&q=${text}&image_type=photo&per_page=${amount}&safesearch=true`)
              setImages(result.data.hits)
              setLoading(true);
             //  console.log(images);
         }
         fetchImages();
         // eslint-disable-next-line
-    },[text])
+    },[text , amount])
    
 
     //SEARCH
@@ -40,9 +40,13 @@ const Search = () => {
         }
      }
      
-    //  SEARCH BY AMOUNT
-     const onAmountChange = (e ,index, value) => {
-     setAmount(value);
+      //  SEARCH BY AMOUNT
+     const onAmountChange = async (e ,index, value) => {
+      setLoading(true);
+      const result = await axios.get(`${apiUrl}/?key=${apiKey}&q=${text}&image_type=photo&per_page=${amount}&safesearch=true`)
+       setImages(result.data.hits)
+       setLoading(true);
+      setAmount(value);
     }
 
     return (
